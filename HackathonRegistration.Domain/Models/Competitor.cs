@@ -8,28 +8,13 @@ using System.Threading.Tasks;
 
 namespace HackathonRegistration.Domain.Models
 {
-    public class Competitor
+    public class Competitor : User
     {
-        [Key]
         public int CompetitorID { get; set; }
 
         [ForeignKey("Team")]
         public int TeamID { get; set; }
         public Team Team { get; set; }
 
-        [Required]
-        public string Title { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string ID { get; set; }
-
-        [Required]
-        public string Email { get; set; }
-
-        [Required]
-        public string Mobile { get; set; }
     }
 }
