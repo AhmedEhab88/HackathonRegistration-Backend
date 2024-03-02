@@ -16,16 +16,15 @@ namespace HackathonRegistration.Infrastructure
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<Competitor> Competitors { get; set; }
         public DbSet<Hackathon> Hackathons { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Competitor> Competitors { get; set; }
         public DbSet<Challenge> Challenges { get; set; }
         public DbSet<HackathonChallenge> HackathonChallenges { get; set; }
         public DbSet<TeamChallenge> TeamChallenges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        { 
-
+        {
             modelBuilder.Entity<HackathonChallenge>()
                 .HasKey(hc => new { hc.HackathonID, hc.ChallengeID });
 

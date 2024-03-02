@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HackathonRegistration.Infrastructure.Repositories
 {
@@ -24,9 +26,16 @@ namespace HackathonRegistration.Infrastructure.Repositories
                                  .Where(u => u.Username == username)
                                  .FirstOrDefaultAsync();
         }
-        public Task<bool> CheckPasswordAsync(User user, string password)
+        public bool CheckPasswordAsync(User user, string password)
         {
-            throw new NotImplementedException();
+            return BCrypt.Net.BCrypt.Verify(password, user.Password);
+        }
+
+        public async Task SaveCompetitorAsync(Competitor competitor) 
+        {
+            await _context.Set<Competitor>().AddAsync(competitor);
+
+            await _context.SaveChangesAsync();
         }
     }
 }
