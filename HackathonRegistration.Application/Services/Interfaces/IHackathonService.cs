@@ -1,4 +1,5 @@
-﻿using HackathonRegistration.Domain.Models;
+﻿using HackathonRegistration.Application.Models;
+using HackathonRegistration.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace HackathonRegistration.Application.Services.Interfaces
     public interface IHackathonService
     {
         Task CreateHackathon(Hackathon hackathon);
-        Task<List<Hackathon>> GetHackathons();
-        Task<Hackathon?> GetHackathonById(int id);
+        Task<List<RetrieveAllHackathonsDto>> GetHackathons();
+        Task<RetrieveHackathonByIdDto?> GetHackathonById(int id);
     }
 }

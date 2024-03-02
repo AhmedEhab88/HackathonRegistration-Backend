@@ -1,7 +1,8 @@
-﻿using HackathonRegistration.Domain.Models;
+﻿using HackathonRegistration.Application.Models;
+using HackathonRegistration.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace HackathonRegistration.API.Models
+namespace HackathonRegistration.Application.Models
 {
     public class HackathonDto
     {

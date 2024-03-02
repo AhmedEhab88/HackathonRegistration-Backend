@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HackathonRegistration.API.Models
+namespace HackathonRegistration.Application.Models
 {
     public class RegisterDto
     {
