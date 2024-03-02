@@ -4,6 +4,7 @@ using HackathonRegistration.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HackathonRegistration.Infrastructure.Migrations
 {
     [DbContext(typeof(HackathonRegistrationDbContext))]
-    partial class HackathonRegistrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240302174109_AllowTeamIDToBeNull")]
+    partial class AllowTeamIDToBeNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,6 +178,9 @@ namespace HackathonRegistration.Infrastructure.Migrations
             modelBuilder.Entity("HackathonRegistration.Domain.Models.Competitor", b =>
                 {
                     b.HasBaseType("HackathonRegistration.Domain.Models.User");
+
+                    b.Property<int>("CompetitorID")
+                        .HasColumnType("int");
 
                     b.Property<int?>("TeamID")
                         .HasColumnType("int");

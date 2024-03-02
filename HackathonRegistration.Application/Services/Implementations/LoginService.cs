@@ -50,7 +50,7 @@ namespace HackathonRegistration.Application.Services.Implementations
         }
 
         public async Task Register(Competitor competitor)
-        {
+        { 
             await _userRepository.SaveCompetitorAsync(competitor);
         }
     }
