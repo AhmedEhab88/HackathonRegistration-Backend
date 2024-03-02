@@ -1,4 +1,4 @@
-﻿using HackathonRegistration.API.Models;
+﻿using HackathonRegistration.Application.Models;
 using HackathonRegistration.Application.Services.Interfaces;
 using HackathonRegistration.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +23,7 @@ namespace HackathonRegistration.API.Controllers
         {
             var token = await _loginService.Login(model.Username, model.Password);
             if (token == null)
-                return Unauthorized();
+                return NotFound("User does not exist.");
 
             return Ok(new { Token = token });
         }
