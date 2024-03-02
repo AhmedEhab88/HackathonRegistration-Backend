@@ -25,6 +25,8 @@ public class HackathonRepository : IHackathonRepository
 
     public async Task<Hackathon?> GetHackathonById(int id)
     {
-        return await _dbContext.Hackathons.FirstOrDefaultAsync(h => h.HackathonID == id);
+        return await _dbContext.Hackathons
+            .Include(h => h.Challenges)
+            .FirstOrDefaultAsync(h => h.HackathonID == id);
     }
 }
