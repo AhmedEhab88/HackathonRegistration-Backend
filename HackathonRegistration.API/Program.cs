@@ -1,6 +1,8 @@
 using HackathonRegistration.Application.Services.Implementations;
 using HackathonRegistration.Application.Services.Interfaces;
+using HackathonRegistration.Domain.Repositories;
 using HackathonRegistration.Infrastructure;
+using HackathonRegistration.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +22,7 @@ builder.Services.AddIdentityCore<IdentityUser>()
      .AddEntityFrameworkStores<HackathonRegistrationDbContext>();
 
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using HackathonRegistration.Application.Services.Interfaces;
+using HackathonRegistration.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,19 +15,19 @@ namespace HackathonRegistration.Application.Services.Implementations
 {
     public class LoginService : ILoginService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
 
-        public LoginService(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public LoginService(IUserRepository userRepository, IConfiguration configuration)
         {
-            _userManager = userManager;
+            _userRepository = userRepository;
             _configuration = configuration;
         }
 
         public async Task<string> Login(string username, string password)
         {
-            var user = await _userManager.FindByNameAsync(username);
-            if (user != null && await _userManager.CheckPasswordAsync(user, password))
+            var user = await _userRepository.FindByNameAsync(username);
+            if (user != null && await _userRepository.CheckPasswordAsync(user, password))
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
@@ -34,7 +35,7 @@ namespace HackathonRegistration.Application.Services.Implementations
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Name, user.UserName)
+                    new Claim(ClaimTypes.Name, user.Username)
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
