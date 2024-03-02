@@ -1,4 +1,4 @@
-﻿using HackathonRegistration.API.Models;
+﻿using HackathonRegistration.Application.Models;
 using HackathonRegistration.Application.Services.Interfaces;
 using HackathonRegistration.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
