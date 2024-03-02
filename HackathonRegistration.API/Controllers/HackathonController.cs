@@ -14,9 +14,9 @@ namespace HackathonRegistration.API.Controllers
     [Route("api/hackathons")]
     public class HackathonController : ControllerBase
     {
-        private readonly IHackathonService _hackathonService;
+        private readonly ICompetitorService _hackathonService;
 
-        public HackathonController(IHackathonService hackathonService)
+        public HackathonController(ICompetitorService hackathonService)
         {
             _hackathonService = hackathonService;
         }

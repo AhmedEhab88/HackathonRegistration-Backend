@@ -12,11 +12,9 @@ namespace HackathonRegistration.Domain.Models
         [Key]
         public int UserID { get; set; }
 
-        [Required]
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
-        [Required]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         [Required]
         public string Name { get; set; }
