@@ -32,7 +32,6 @@ public class CompetitorRepository : ICompetitorRepository
 
     public async Task Register(Team team)
     {
-        await _dbContext.Teams.AddAsync(team);
 
         foreach (var competitor in team.Competitors)
         {

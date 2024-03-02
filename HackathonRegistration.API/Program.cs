@@ -52,9 +52,10 @@ builder.Services.AddIdentityCore<IdentityUser>()
      .AddEntityFrameworkStores<HackathonRegistrationDbContext>();
 
 builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddScoped<ICompetitorService, HackathonService>();
+builder.Services.AddScoped<ICompetitorService, CompetitorService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IHackathonRepository, HackathonRepository>();
+builder.Services.AddScoped<ICompetitorRepository, CompetitorRepository>();
 
 var app = builder.Build();
 

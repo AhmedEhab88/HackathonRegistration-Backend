@@ -10,6 +10,6 @@ namespace HackathonRegistration.Application.Services.Interfaces
 {
     public interface ICompetitorService
     {
-        Task RegisterCompetitor(Team team);
+        Task RegisterCompetitor(CompetitorRegisterRequest request);
     }
 }

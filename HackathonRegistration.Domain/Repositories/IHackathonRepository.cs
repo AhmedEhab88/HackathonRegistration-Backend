@@ -12,5 +12,7 @@ namespace HackathonRegistration.Domain.Repositories
         Task CreateHackathon(Hackathon hackathon);
         Task<List<Hackathon>> GetHackathons();
         Task<Hackathon?> GetHackathonById(int id);
+
+        Task<Challenge> GetChallengeById(int challengeId);
     }
 }

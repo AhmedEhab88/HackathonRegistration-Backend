@@ -23,36 +23,21 @@ namespace HackathonRegistration.API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "competitor")]
-        public Task<IActionResult> RegisterCompetitor([FromBody] CompetitorRegisterRequest request)
+        public async Task<IActionResult> RegisterCompetitor([FromBody] CompetitorRegisterRequest request)
         {
-            // Create the team
-            var team = new Team
-            {
-                TeamName = request.TeamName,
-                HackathonID = request.HackathonId
-            };
-
-            var teamChallenge = new TeamChallenge
+            try
             {
 
-            };
-
-            // Register each competitor in the team
-            foreach (var competitorDto in request.Competitors)
+                await _competitorService.RegisterCompetitor(request);
+                
+                return Ok();
+            }
+            catch (Exception ex)
             {
-                var competitor = new Competitor
-                {
-                    Name = competitorDto.Name,
-                    Email = competitorDto.Email,
-                    Mobile = competitorDto.Mobile
-                };
-
-                team.Competitors.Add(competitor);
+                // Handle any exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
 
-            _competitorService.RegisterCompetitor(team);
-
-            return Ok("The team is registered successfully");
         }
     }
 }

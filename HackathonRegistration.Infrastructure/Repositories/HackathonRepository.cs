@@ -29,4 +29,9 @@ public class HackathonRepository : IHackathonRepository
             .Include(h => h.Challenges)
             .FirstOrDefaultAsync(h => h.HackathonID == id);
     }
+
+    public async Task<Challenge> GetChallengeById(int challengeId)
+    {
+        return await _dbContext.Challenges.Where(c => c.ChallengeID == challengeId).FirstAsync();
+    }
 }
