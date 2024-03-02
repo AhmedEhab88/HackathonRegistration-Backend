@@ -1,4 +1,5 @@
 ﻿using HackathonRegistration.Application.Services.Interfaces;
+using HackathonRegistration.Domain.Models;
 using HackathonRegistration.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,7 @@ namespace HackathonRegistration.Application.Services.Implementations
         public async Task<string> Login(string username, string password)
         {
             var user = await _userRepository.FindByNameAsync(username);
-            if (user != null && await _userRepository.CheckPasswordAsync(user, password))
+            if (user != null && _userRepository.CheckPasswordAsync(user, password))
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
@@ -35,7 +36,8 @@ namespace HackathonRegistration.Application.Services.Implementations
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Name, user.Username)
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Role, user.Username == "admin" ? "admin" : "competitor")
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -45,6 +47,11 @@ namespace HackathonRegistration.Application.Services.Implementations
             }
 
             return null;
+        }
+
+        public async Task Register(Competitor competitor)
+        {
+            await _userRepository.SaveCompetitorAsync(competitor);
         }
     }
 }

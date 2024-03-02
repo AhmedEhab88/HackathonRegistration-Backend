@@ -3,8 +3,13 @@ using HackathonRegistration.Application.Services.Interfaces;
 using HackathonRegistration.Domain.Repositories;
 using HackathonRegistration.Infrastructure;
 using HackathonRegistration.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +22,31 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<HackathonRegistrationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HackathonRegistrationDb")));
+
+
+var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+
+builder.Services.AddAuthentication(config =>
+{
+    config.DefaultScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(config =>
+{
+    config.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+
+        ValidateIssuer = false,
+        ValidateAudience = false,
+    };
+});
+
+builder.Services.AddAuthorization(options =>
+ {
+     options.AddPolicy("BasicAuthentication", new AuthorizationPolicyBuilder("BasicAuthentication").RequireAuthenticatedUser().Build());
+ });
 
 builder.Services.AddIdentityCore<IdentityUser>()
      .AddEntityFrameworkStores<HackathonRegistrationDbContext>();
@@ -33,6 +63,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

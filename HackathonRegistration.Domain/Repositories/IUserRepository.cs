@@ -11,6 +11,8 @@ namespace HackathonRegistration.Domain.Repositories
     {
         Task<User?> FindByNameAsync(string username);
 
-        Task<bool> CheckPasswordAsync(User user, string password);
+        bool CheckPasswordAsync(User user, string password);
+
+        Task SaveCompetitorAsync(Competitor competitor);
     }
 }
