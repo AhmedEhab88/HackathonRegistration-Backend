@@ -23,7 +23,7 @@ namespace HackathonRegistration.API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> CreateHackathon(HackathonDto model)
+        public async Task<IActionResult> CreateHackathon([FromBody] HackathonDto model)
         {
             try
             {
